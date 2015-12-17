@@ -27,6 +27,7 @@ public class GetGeolocation {
     public static final String baseUrl = "http://maps.googleapis.com/maps/api/geocode/json";// путь к Geocoding API по HTTP
     public static final String GeoIPUrl  = "http://ipinfo.io/json";
     public static final String near = "nearbly";
+    
 
     public static Pair<GeoLocation, Double> getGeolocation(String were) throws IOException {
         if (were.equals(near)) {
@@ -151,7 +152,7 @@ public class GetGeolocation {
                     @Override
                     public String apply(final Map.Entry<String, String> input) {
                         try {
-                            final StringBuffer buffer = new StringBuffer();
+                            final StringBuilder buffer = new StringBuilder();
                             buffer.append(input.getKey());// получаем значение вида key=value
                             buffer.append('=');
                             buffer.append(URLEncoder.encode(input.getValue(), "utf-8"));// кодируем строку в соответствии со стандартом HTML 4.01

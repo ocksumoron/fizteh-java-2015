@@ -96,7 +96,7 @@ public class FormatMaster {
                         + s.getRetweetedStatus().getUser().getName() + ": " + s.getRetweetedStatus().getText());
             } else {
                 result.append("@" + s.getUser().getName() + ": " + s.getText());
-                if (s.getRetweetCount() != 0) {
+                if (s.isRetweeted()) {
                     result.append(" (" + Long.toString(s.getRetweetCount()) + " "
                             + RETWEET_FORMS[getCorrectForm(s.getRetweetCount()).getType()] + ")");
                 }

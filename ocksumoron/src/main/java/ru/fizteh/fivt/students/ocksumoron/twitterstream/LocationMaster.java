@@ -21,7 +21,7 @@ public class LocationMaster {
 
     private static final int DEFAULT_RES = 5;
 
-    private GeoLocation getCoordinates(NodeList sections) {
+    private static GeoLocation getCoordinates(NodeList sections) {
         Element section = (Element) sections.item(0);
         String coordinates = section.getTextContent();
         String[] coordinatesParsed = coordinates.split(" ");
@@ -30,12 +30,8 @@ public class LocationMaster {
         return new GeoLocation(latitude, longitude);
     }
 
-    private double getRes(GeoLocation lowerCornerPos, GeoLocation upperCornerPos) {
-        return DEFAULT_RES;
-    }
-
-    private Document documentResolver(URL url)
-            throws MalformedURLException, IOException, ParserConfigurationException, SAXException {
+    private static Document documentResolver(URL url)
+            throws IOException, ParserConfigurationException, SAXException {
         URLConnection geoConnection = url.openConnection();
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         factory.setIgnoringComments(true);
@@ -49,7 +45,7 @@ public class LocationMaster {
         return document;
     }
 
-    public Location getLocation(String place) {
+    public static Location getLocation(String place) {
         try {
             if (place.equals("nearby")) {
                 Document document = documentResolver(new URL("http://api.hostip.info/"));
@@ -68,7 +64,7 @@ public class LocationMaster {
             GeoLocation centerPos = getCoordinates(document.getElementsByTagName("pos"));
             GeoLocation swPos = getCoordinates(document.getElementsByTagName("lowerCorner"));
             GeoLocation nePos = getCoordinates(document.getElementsByTagName("upperCorner"));
-            double res = getRes(swPos, nePos);
+            double res = DEFAULT_RES;
             return new Location(centerPos, swPos, nePos, res);
         } catch (IOException | ParserConfigurationException | SAXException e) {
             e.printStackTrace();

@@ -72,15 +72,15 @@ public class FormatMaster {
             return "только что";
         } else if (hourDiff == 0) {
             return Long.toString(minuteDiff)
-                    + getTimeString(minuteDiff, ETime.MINUTE);
-        } else if (ChronoUnit.DAYS.between(tweetDate, curDate) == 0) {
+                    + getTimeString(minuteDiff, ETime.MINUTE) + " назад";
+        } else if (dayDiff == 0) {
             return Long.toString(hourDiff)
-                    + getTimeString(hourDiff, ETime.HOUR);
+                    + getTimeString(hourDiff, ETime.HOUR) + " назад";
         } else if (dayDiff == NUMBER_ONE) {
             return "вчера";
         } else {
             return Long.toString(dayDiff)
-                    + getTimeString(dayDiff, ETime.DAY);
+                    + getTimeString(dayDiff, ETime.DAY) + " назад";
         }
     }
 
@@ -103,7 +103,7 @@ public class FormatMaster {
             }
             result.append(SEPARATOR);
             return result.toString();
-        } else if (!s.isRetweeted()) {
+        } else if (!s.isRetweet()) {
             result.append("@" + s.getUser().getName() + ": " + s.getText() + SEPARATOR);
             return result.toString();
         }

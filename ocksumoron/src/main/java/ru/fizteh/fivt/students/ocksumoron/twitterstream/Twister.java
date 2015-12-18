@@ -2,15 +2,10 @@ package ru.fizteh.fivt.students.ocksumoron.twitterstream;
 
 import com.beust.jcommander.JCommander;
 import twitter4j.*;
-import twitter4j.util.function.Consumer;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
-/**
- * Created by ocksumoron on 16.09.15.
- */
 
 public class Twister {
 

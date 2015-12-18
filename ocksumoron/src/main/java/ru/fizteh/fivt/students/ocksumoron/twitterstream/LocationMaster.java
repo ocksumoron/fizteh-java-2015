@@ -10,13 +10,9 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
-/**
- * Created by ocksumoron on 24.09.15.
- */
 public class LocationMaster {
 
     private static final int DEFAULT_RES = 5;

@@ -1,6 +1,5 @@
 package ru.fizteh.fivt.students.ocksumoron.twitterstream;
 
-import junit.framework.Assert;
 import org.junit.Test;
 import twitter4j.Status;
 

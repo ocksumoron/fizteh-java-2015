@@ -1,8 +1,6 @@
 package ru.fizteh.fivt.students.ocksumoron.twitterstream;
 
-import junit.framework.Assert;
 import org.junit.Test;
-import ru.fizteh.fivt.students.ocksumoron.twitterstream.LocationMaster;
 
 import static org.junit.Assert.*;
 

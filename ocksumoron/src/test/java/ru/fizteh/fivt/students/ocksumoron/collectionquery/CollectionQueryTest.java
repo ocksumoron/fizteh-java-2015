@@ -1,6 +1,5 @@
 package ru.fizteh.fivt.students.ocksumoron.collectionquery;
 
-import com.sun.jdi.InvocationException;
 import ru.fizteh.fivt.students.ocksumoron.collectionquery.impl.Tuple;
 
 import java.lang.reflect.InvocationTargetException;

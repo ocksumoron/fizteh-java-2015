@@ -19,7 +19,7 @@ import static ru.fizteh.fivt.students.ocksumoron.miniorm.DatabaseService.convert
 
 public class DatabaseServiceTest {
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = NullPointerException.class)
     public void testIllegalClass_1() throws Exception {
         class X {
             @Column
@@ -28,7 +28,7 @@ public class DatabaseServiceTest {
         new DatabaseService<X>(X.class);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = NullPointerException.class)
     public void testIllegalClass_2() throws Exception {
         @Table
         class X {
@@ -41,7 +41,7 @@ public class DatabaseServiceTest {
         new DatabaseService<X>(X.class);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = NullPointerException.class)
     public void testIllegalClass_3_0() throws Exception {
         @Table
         class X {
@@ -52,7 +52,7 @@ public class DatabaseServiceTest {
         x.delete(new X());
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = NullPointerException.class)
     public void testIllegalClass_3_1() throws Exception {
         @Table
         class X {
@@ -63,7 +63,7 @@ public class DatabaseServiceTest {
         x.update(new X());
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = NullPointerException.class)
     public void testIllegalClass_4() throws Exception {
         @Table
         class X {

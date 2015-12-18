@@ -16,11 +16,11 @@ public class BlockingQueue<T> {
 
     private Queue<T> queue;
     private int maxSize;
-    final Lock lock = new ReentrantLock();
-    final Condition notEnoughSpace = lock.newCondition();
-    final Condition notEnoughElements = lock.newCondition();
-    final Object offerSynchronizer = new Object();
-    final Object takeSynchronizer = new Object();
+    private final Lock lock = new ReentrantLock();
+    private final Condition notEnoughSpace = lock.newCondition();
+    private final Condition notEnoughElements = lock.newCondition();
+    private final Object offerSynchronizer = new Object();
+    private final Object takeSynchronizer = new Object();
 
     BlockingQueue(int size) {
         queue = new ArrayDeque<T>();

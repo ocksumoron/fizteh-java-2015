@@ -15,19 +15,12 @@ public class RollCall {
 
     private static volatile boolean allReady;
     private static boolean finish;
-    //private static CountDownLatch countDownLatch;
     private static volatile Random chance = new Random();
     private static CyclicBarrier beginAnswer;
     private static CyclicBarrier endAnswer;
     private static final int NO_PROBABILITY = 10;
 
     private static class Player extends Thread {
-
-        public static Semaphore semaphore = new Semaphore(0);
-
-        public void setLock() {
-            semaphore.release();
-        }
 
         @Override
         public void run() {

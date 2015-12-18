@@ -3,8 +3,6 @@ package ru.fizteh.fivt.students.ocksumoron.twitterstream;
 import com.beust.jcommander.JCommander;
 import twitter4j.*;
 
-import java.util.List;
-
 /**
  * Created by ocksumoron on 16.09.15.
  */

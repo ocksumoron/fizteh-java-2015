@@ -11,7 +11,6 @@ public class RollCall {
 
     private static volatile boolean allReady;
     private static boolean finish;
-    //private static CountDownLatch countDownLatch;
     private static volatile Random chance = new Random();
     private static CyclicBarrier beginAnswer;
     private static CyclicBarrier endAnswer;
@@ -46,7 +45,6 @@ public class RollCall {
 
     public static void main(String[] args) {
         finish = false;
-
         int n = Integer.valueOf(args[0]);
         beginAnswer = new CyclicBarrier(n + 1);
         endAnswer = new CyclicBarrier(n + 1);

@@ -21,6 +21,7 @@ public class TwisterTest {
 
     }
 
+    @Test
     public void testGetFormattedTweetsLimited() throws Exception {
         JCommanderProperties jcp = new JCommanderProperties();
         String[] args = {"-p", "New York", "-q", "a", "--limit", "14"};

@@ -3,7 +3,6 @@ package ru.fizteh.fivt.students.ocksumoron.twitterstream;
 import com.beust.jcommander.JCommander;
 import twitter4j.*;
 
-import ru.fizteh.fivt.students.ocksumoron.twitterstream.InvalidLocationException;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,12 +1,8 @@
 package ru.fizteh.fivt.students.ocksumoron.threads;
 
-import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.BrokenBarrierException;
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.CyclicBarrier;
-import java.util.concurrent.Semaphore;
-import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Created by ocksumoron on 14.12.15.

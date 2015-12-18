@@ -101,7 +101,7 @@ public class DatabaseService<T> implements Closeable {
     }
 
     DatabaseService(Class<T> newClazz) throws IOException {
-        this(newClazz, "/h2.properties");
+        this(newClazz, "/h2test.properties");
     }
 
     void createTable() throws SQLException {

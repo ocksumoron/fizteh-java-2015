@@ -1,108 +1,82 @@
 package ru.fizteh.fivt.students.ocksumoron.collectionquery.impl;
 
-import javax.management.Query;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
-import java.util.stream.Stream;
+import java.util.stream.Collectors;
 
-/**
- * Created by ocksumoron on 17.12.15.
- */
 public class FromStmt<T> {
-
-    private List<T> elements = new ArrayList<T>();
-
-    public List<T> getElements() {
-        return elements;
-    }
+    private List<T> list = new ArrayList<T>();
 
     public FromStmt(Iterable<T> iterable) {
-        for (T element : iterable) {
-            elements.add(element);
+        for (T curr : iterable) {
+            list.add(curr);
         }
     }
 
     public static <T> FromStmt<T> from(Iterable<T> iterable) {
-        return new FromStmt(iterable);
-    }
-
-    public static <T> FromStmt<T> from(Stream<T> stream) {
-        throw new UnsupportedOperationException();
-    }
-
-    public static <T> FromStmt<T> from(Query query) {
-        throw new UnsupportedOperationException();
+        return new FromStmt<>(iterable);
     }
 
     @SafeVarargs
-    public final <R> SelectStmt<T, R> select(Class<R> clazz, Function<T, ?>... s) {
-        throw new UnsupportedOperationException();
+    public final <R> SelectStmt<T, R> select(Class<R> clazz, Function<T, ?>... functions) {
+        return new SelectStmt<>(list, clazz, false, functions);
     }
 
-    /**
-     * Selects the only defined expression as is without wrapper.
-     *
-     * @param s
-     * @param <R>
-     * @return statement resulting in collection of R
-     */
-    public final <R> SelectStmt<T, R> select(Function<T, R> s) {
-        throw new UnsupportedOperationException();
+    @SafeVarargs
+    public final <R> SelectStmt<T, R> selectDistinct(Class<R> clazz, Function<T, ?>... functions) {
+        return new SelectStmt<>(list, clazz, true, functions);
     }
 
-    /**
-     * Selects the only defined expression as is without wrapper.
-     *
-     * @param first
-     * @param second
-     * @param <F>
-     * @param <S>
-     * @return statement resulting in collection of R
-     */
     public final <F, S> SelectStmt<T, Tuple<F, S>> select(Function<T, F> first, Function<T, S> second) {
-        throw new UnsupportedOperationException();
-    }
-
-    @SafeVarargs
-    public final <R> SelectStmt<T, R> selectDistinct(Class<R> clazz, Function<T, ?>... s) {
-        throw new UnsupportedOperationException();
-    }
-
-    /**
-     * Selects the only defined expression as is without wrapper.
-     *
-     * @param s
-     * @param <R>
-     * @return statement resulting in collection of R
-     */
-    public final <R> SelectStmt<T, R> selectDistinct(Function<T, R> s) {
-        throw new UnsupportedOperationException();
+        return new SelectStmt<>(list, false, first, second);
     }
 
     public <J> JoinClause<T, J> join(Iterable<J> iterable) {
-        throw new UnsupportedOperationException();
+        return new JoinClause<T, J>(list, iterable);
     }
 
-    public <J> JoinClause<T, J> join(Stream<J> stream) {
-        throw new UnsupportedOperationException();
-    }
+    public class JoinClause<S, J> {
+        private List<S> firstList = new ArrayList<>();
+        private List<J> secondList = new ArrayList<>();
+        private List<Tuple<S, J>> list = new ArrayList<>();
 
-//    public <J> JoinClause<T, J> join(Query<J> stream) {
-//        throw new UnsupportedOperationException();
-//    }
-
-    public class JoinClause<T, J> {
-
-        public FromStmt<Tuple<T, J>> on(BiPredicate<T, J> condition) {
-            throw new UnsupportedOperationException();
+        public JoinClause(List<S> firstList, Iterable<J> secondList) {
+            this.firstList.addAll(firstList.stream().collect(Collectors.toList()));
+            for (J curr : secondList) {
+                this.secondList.add(curr);
+            }
         }
 
-        public <K extends Comparable<?>> FromStmt<Tuple<T, J>> on(
-                Function<T, K> leftKey,
+        public FromStmt<Tuple<S, J>> on(BiPredicate<S, J> condition) {
+            for (S first : firstList) {
+                list.addAll(secondList.stream().filter(second -> condition.test(first, second))
+                        .map(second -> new Tuple<>(first, second)).collect(Collectors.toList()));
+            }
+            return new FromStmt<>(list);
+        }
+
+        public <K extends Comparable<?>> FromStmt<Tuple<S, J>> on(
+                Function<S, K> leftKey,
                 Function<J, K> rightKey) {
-            throw new UnsupportedOperationException();
+            HashMap<K, List<J>> map = new HashMap<>();
+            for (J e : secondList) {
+                K key = rightKey.apply(e);
+                if (!map.containsKey(key)) {
+                    map.put(key, new ArrayList<>());
+                }
+                map.get(key).add(e);
+            }
+            for (S first : firstList) {
+                K key = leftKey.apply(first);
+                if (map.containsKey(key)) {
+                    List<J> second = map.get(key);
+                    second.forEach(s -> list.add(new Tuple<>(first, s)));
+                }
+            }
+            return new FromStmt<>(list);
         }
     }
 }

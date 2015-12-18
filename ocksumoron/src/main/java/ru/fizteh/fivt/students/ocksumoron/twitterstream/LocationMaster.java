@@ -41,7 +41,7 @@ public class LocationMaster {
         return document;
     }
 
-    public static Location getLocation(String place) {
+    public static Location getLocation(String place) throws InvalidLocationException {
         try {
             if (place.equals("nearby")) {
                 Document document = documentResolver(new URL("http://api.hostip.info/"));
@@ -55,7 +55,7 @@ public class LocationMaster {
 
             Document document = documentResolver(new URL("https://geocode-maps.yandex.ru/1.x/?geocode=" + place));
             if (document.getElementsByTagName("pos").getLength() == 0) {
-                return new Location(-1);
+                throw new InvalidLocationException();
             }
             GeoLocation centerPos = getCoordinates(document.getElementsByTagName("pos"));
             GeoLocation swPos = getCoordinates(document.getElementsByTagName("lowerCorner"));
@@ -65,6 +65,6 @@ public class LocationMaster {
         } catch (IOException | ParserConfigurationException | SAXException e) {
             e.printStackTrace();
         }
-        return new Location(-1);
+        throw new InvalidLocationException();
     }
 }

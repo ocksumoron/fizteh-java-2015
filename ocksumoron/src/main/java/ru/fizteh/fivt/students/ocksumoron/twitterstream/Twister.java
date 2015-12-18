@@ -3,6 +3,7 @@ package ru.fizteh.fivt.students.ocksumoron.twitterstream;
 import com.beust.jcommander.JCommander;
 import twitter4j.*;
 
+import ru.fizteh.fivt.students.ocksumoron.twitterstream.InvalidLocationException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,13 +52,13 @@ public class Twister {
             twitter.search(query).getTweets().stream()
                     .map(s -> formatter.format(s, jcp.isHideRetweets(), false)).forEach(ans::add);
 
-        } catch (TwitterException e) {
+        } catch (TwitterException | InvalidLocationException e) {
             e.printStackTrace();
         }
         return ans;
     }
 
-    public static void printStream(JCommanderProperties jcp) {
+    public static void printStream(JCommanderProperties jcp) throws InvalidLocationException {
         Location location = LocationMaster.getLocation(jcp.getPlace());
         if (location.getError() == 0) {
             FilterQuery filterQuery = new FilterQuery();
@@ -91,7 +92,7 @@ public class Twister {
             });
             twitterStream.filter(filterQuery);
         } else {
-            System.err.println("Bad location");
+            throw new InvalidLocationException("very bad");
         }
     }
 }
